@@ -329,24 +329,16 @@ haier_protocol::HaierMessage Smartair2Climate::get_control_message() {
     if (climate_control.swing_mode.has_value()) {
       switch (climate_control.swing_mode.value()) {
         case CLIMATE_SWING_OFF:
-          out_data->use_swing_bits = 0;
-          out_data->swing_both = 0;
+          out_data->swing_both = (uint8_t) smartair2_protocol::SwingMode::OFF;
           break;
         case CLIMATE_SWING_VERTICAL:
-          out_data->swing_both = 0;
-          out_data->vertical_swing = 1;
-          out_data->horizontal_swing = 0;
+          out_data->swing_both = (uint8_t) smartair2_protocol::SwingMode::VERTICAL;
           break;
         case CLIMATE_SWING_HORIZONTAL:
-          out_data->swing_both = 0;
-          out_data->vertical_swing = 0;
-          out_data->horizontal_swing = 1;
+          out_data->swing_both = (uint8_t) smartair2_protocol::SwingMode::HORIZONTAL;
           break;
         case CLIMATE_SWING_BOTH:
-          out_data->swing_both = 1;
-          out_data->use_swing_bits = 0;
-          out_data->vertical_swing = 0;
-          out_data->horizontal_swing = 0;
+          out_data->swing_both = (uint8_t) smartair2_protocol::SwingMode::BOTH;
           break;
       }
     }
@@ -502,16 +494,19 @@ haier_protocol::HandlerError Smartair2Climate::process_status_message_(const uin
   {
     // Swing mode
     ClimateSwingMode old_swing_mode = this->swing_mode;
-    if (packet.control.swing_both == 0) {
-      if (packet.control.vertical_swing != 0) {
-        this->swing_mode = CLIMATE_SWING_VERTICAL;
-      } else if (packet.control.horizontal_swing != 0) {
-        this->swing_mode = CLIMATE_SWING_HORIZONTAL;
-      } else {
+    switch (packet.control.swing_both) {
+      case (uint8_t) smartair2_protocol::SwingMode::OFF:
         this->swing_mode = CLIMATE_SWING_OFF;
-      }
-    } else {
-      swing_mode = CLIMATE_SWING_BOTH;
+        break;
+      case (uint8_t) smartair2_protocol::SwingMode::VERTICAL:
+        this->swing_mode = CLIMATE_SWING_VERTICAL;
+        break;
+      case (uint8_t) smartair2_protocol::SwingMode::HORIZONTAL:
+        this->swing_mode = CLIMATE_SWING_HORIZONTAL;
+        break;
+      case (uint8_t) smartair2_protocol::SwingMode::BOTH:
+        this->swing_mode = CLIMATE_SWING_BOTH;
+        break;
     }
     should_publish = should_publish || (old_swing_mode != this->swing_mode);
   }
