@@ -8,6 +8,8 @@ enum class ConditioningMode : uint8_t { AUTO = 0x00, COOL = 0x01, HEAT = 0x02, F
 
 enum class FanMode : uint8_t { FAN_HIGH = 0x00, FAN_MID = 0x01, FAN_LOW = 0x02, FAN_AUTO = 0x03 };
 
+enum class SwingMode : uint8_t { OFF = 0x00, VERTICAL = 0x01, HORIZONTAL = 0x02, BOTH = 0x03 };
+
 struct HaierPacketControl {
   // Control bytes starts here
   // 10
