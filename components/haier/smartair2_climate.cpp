@@ -532,9 +532,7 @@ haier_protocol::HandlerError Smartair2Climate::process_status_message_(const uin
   esp_log_printf_((should_publish ? ESPHOME_LOG_LEVEL_INFO : ESPHOME_LOG_LEVEL_DEBUG), TAG, __LINE__,
                   "Fan speed Status = 0x%X", packet.control.fan_mode);
   esp_log_printf_((should_publish ? ESPHOME_LOG_LEVEL_INFO : ESPHOME_LOG_LEVEL_DEBUG), TAG, __LINE__,
-                  "Horizontal Swing Status = 0x%X", packet.control.horizontal_swing);
-  esp_log_printf_((should_publish ? ESPHOME_LOG_LEVEL_INFO : ESPHOME_LOG_LEVEL_DEBUG), TAG, __LINE__,
-                  "Vertical Swing Status = 0x%X", packet.control.vertical_swing);
+                  "Swing Status = 0x%X", packet.control.swing_mode);
   esp_log_printf_((should_publish ? ESPHOME_LOG_LEVEL_INFO : ESPHOME_LOG_LEVEL_DEBUG), TAG, __LINE__,
                   "Set Point Status = 0x%X", packet.control.set_point);
   return haier_protocol::HandlerError::HANDLER_OK;
