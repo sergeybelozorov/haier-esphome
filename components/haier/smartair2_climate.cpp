@@ -333,12 +333,16 @@ haier_protocol::HaierMessage Smartair2Climate::get_control_message() {
           break;
         case CLIMATE_SWING_VERTICAL:
           out_data->swing_auto = (uint8_t) smartair2_protocol::SwingMode::VERTICAL;
+          out_data->vertical_swing_down = 0;
+          out_data->vertical_swing_up = 0;            
           break;
         case CLIMATE_SWING_HORIZONTAL:
           out_data->swing_auto = (uint8_t) smartair2_protocol::SwingMode::HORIZONTAL;
           break;
         case CLIMATE_SWING_BOTH:
           out_data->swing_auto = (uint8_t) smartair2_protocol::SwingMode::BOTH;
+          out_data->vertical_swing_down = 0;
+          out_data->vertical_swing_up = 0;  
           break;
       }
     }
