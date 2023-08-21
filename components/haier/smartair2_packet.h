@@ -60,7 +60,7 @@ struct HaierPacketControl {
   // 28
   uint8_t : 8;
   // 29
-  uint8_t : 0;
+  uint8_t : 1;
   uint8_t turbo_mode : 1;           // Turbo mode
   uint8_t quiet_mode : 1;           // Sleep mode
   uint8_t vertical_swing_up : 1;    // Vertical swing Up
